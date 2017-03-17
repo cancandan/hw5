@@ -16,19 +16,20 @@
 using namespace std;
 
 bool checkPiles(Pile* piles, bool log) {
-	bool ok=true;
-	if (log) {cout << "The following piles are not revelead: ";}
+	bool allOk=true;
+	if (log) {cout << "Unrevelead piles: ";}
 	for (int i=0;i<13;i++) {
 		if (!piles[i].hasRevealed()) {
 			if (log) {cout << i << ", ";}
-			ok=false;
+			allOk=false;
 		}
 	}
+	if (allOk && log) {cout << "None" << endl;}
 	if (log) {cout << endl;}
-	return ok;
+	return allOk;
 }
 
-bool play(bool log) {
+Pile* createPiles() {
 	Deck* deck= new Deck();
 	deck->shuffle();
 	Pile* piles= new Pile[13];
@@ -40,7 +41,13 @@ bool play(bool log) {
 			piles[j].addCard(c);
 		}
 	}
+	return piles;
+}
 
+bool play(bool log) {
+	Pile* piles= createPiles();
+
+	// start from the central pile
 	int rank=12;
 	Pile currentPile=piles[rank];
 	Card* cptr;
@@ -57,16 +64,11 @@ bool play(bool log) {
 			if (log) {cout << "king revealed: " << revealedKings << endl;}
 		}
 		if (revealedKings==4) {
-
 			if (checkPiles(piles,log)) {
 				if (log) {cout << "Game is won" << endl;}
-				delete[] piles;
-				delete deck;
 				return true;
 			} else {
 				if (log) {cout << "Game is lost" << endl;}
-				delete[] piles;
-				delete deck;
 				return false;
 			}
 		}

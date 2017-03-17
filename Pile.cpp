@@ -30,6 +30,8 @@ int Pile::getRank() const {
 	return rank;
 }
 
+// put a star next to the first face up card
+// so that we can check the progress
 void Pile::print() {
 	cout << "pile " << rank << ": ";
 	for (int i=0;i<5;i++) {
@@ -55,6 +57,8 @@ void Pile::setRank(int rank) {
 	this->rank = rank;
 }
 
+// return the first element of array,
+// move the rest one position left
 Card* Pile::getTop() {
 	Card* top= cardptrs[0];
 	for (int i=0;i<5;i++) {

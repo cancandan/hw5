@@ -13,6 +13,7 @@ Pile::Pile() {
 	// TODO Auto-generated constructor stub
 	cardptrs= new Card*[5];
 	idx=0;
+	rank=0;
 	firstUp=4;
 }
 
@@ -20,11 +21,8 @@ Pile::~Pile() {
 	// TODO Auto-generated destructor stub
 }
 
-void Pile::addUnder(Card* cardptr) {
-	cardptrs[idx]=cardptr;
-	if (firstUp==-1) {
-		firstUp=idx;
-	}
+void Pile::addUnder(Card* card) {
+	cardptrs[idx]=card;
 	idx++;
 }
 
@@ -64,9 +62,7 @@ Card* Pile::getTop() {
 	}
 	cardptrs[4]=nullptr;
 	idx--;
-	if (firstUp!=-1) {
-		firstUp--;
-	}
+	firstUp--;
 	return top;
 }
 

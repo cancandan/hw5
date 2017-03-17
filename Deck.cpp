@@ -57,6 +57,7 @@ Card* Deck::getCards() {
 
 Deck::~Deck() {
 	// TODO Auto-generated destructor stub
+	delete[] cards;
 }
 
 

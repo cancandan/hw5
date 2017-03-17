@@ -17,7 +17,7 @@ class Pile {
 public:
 	Pile();
 	virtual ~Pile();
-	void addUnder(Card* itemptr);
+	void addUnder(Card* card);
 	void addCard(Card* card);
 	Card* getTop();
 	void print();

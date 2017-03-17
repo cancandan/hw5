@@ -29,7 +29,6 @@ bool checkPiles(Pile* piles, bool log) {
 }
 
 bool play(bool log) {
-
 	Deck* deck= new Deck();
 	deck->shuffle();
 	Pile* piles= new Pile[13];
@@ -58,11 +57,16 @@ bool play(bool log) {
 			if (log) {cout << "king revealed: " << revealedKings << endl;}
 		}
 		if (revealedKings==4) {
+
 			if (checkPiles(piles,log)) {
 				if (log) {cout << "Game is won" << endl;}
+				delete[] piles;
+				delete deck;
 				return true;
 			} else {
 				if (log) {cout << "Game is lost" << endl;}
+				delete[] piles;
+				delete deck;
 				return false;
 			}
 		}
@@ -72,22 +76,24 @@ bool play(bool log) {
 	}
 }
 
-void playstats() {
+void multiplePlays(int numplays) {
 	int wins=0;
-	int total=100000;
-	for (int i=0;i<total;i++) {
+	for (int i=0;i<numplays;i++) {
 		if (play(false)) {
 			wins++;
 		}
 	}
-	cout << "Ratio wins: " << (double)wins/total << ". Theoretical win probability: " << 1.0/13.0;
+	cout << "Wins: " << wins << " Losses: " << numplays-wins << endl;
+	cout << "Ratio wins: " << (double)wins/numplays << ", Theoretical win probability: " << 1.0/13.0 << endl;
 }
 
 int main() {
 	srand (time(NULL));
 //	play(true);
-	playstats();
+	multiplePlays(10000);
 	return 0;
 }
+
+
 
 

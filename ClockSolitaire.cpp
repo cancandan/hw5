@@ -92,8 +92,15 @@ void multiplePlays(int numplays) {
 }
 
 int main() {
-    srand (time(NULL));
-    	play(true);
-//    multiplePlays(1000);
+	time_t t= time(NULL);
+
+//	1489857622 a winning time
+//	time_t t=1489857622;
+
+	cout << "Current Time :" << t << endl << endl;
+    srand (t);
+
+	play(true);
+//    multiplePlays(100);
     return 0;
 }

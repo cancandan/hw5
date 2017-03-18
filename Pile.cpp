@@ -66,11 +66,10 @@ void Pile::Print() {
 		if (cards[idx]) {
 			cout<< *(cards[idx]) << " ";
 		}
-		if (firstUp==idx) {
-			cout << "* ";
-		}
 		cout << " ";
 	}
+
+    cout << "--firstUp: " << firstUp;
 	cout << endl;
 }
 
@@ -89,5 +88,5 @@ void Pile::setRank(int rank) {
 }
 
 bool Pile::hasRevealed() {
-	return firstUp==0?true:false;
+	return firstUp<=0?true:false;
 }

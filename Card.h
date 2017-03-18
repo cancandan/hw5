@@ -34,6 +34,9 @@ public:
 	static int findRank(string s);
 	bool operator == (const Card& c) const;
 
+	/** Copy constructor */
+	Card (Card& other);
+
 	virtual ~Card();
 
 };

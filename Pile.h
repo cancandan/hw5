@@ -1,7 +1,7 @@
 /*
- * Pile.h
+ * PileQueue.h
  *
- *  Created on: Mar 15, 2017
+ *  Created on: Mar 16, 2017
  *      Author: Can Candan
  */
 
@@ -9,21 +9,25 @@
 #define PILE_H_
 #include "Card.h"
 
+#define MAX_SIZE 5
+
 class Pile {
-	Card** cardptrs;
-	int rank;
-	int idx;
+	Card** cards;
+	int front;
+	int rear;
 	int firstUp;
+	int rank;
 public:
 	Pile();
-	virtual ~Pile();
-	void addUnder(Card* card);
-	void addCard(Card* card);
+	bool IsEmpty();
+	bool IsFull();
+	void putUnder(Card* c);
+	bool hasRevealed();
 	Card* getTop();
-	void print();
+	void Print();
+	virtual ~Pile();
 	int getRank() const;
 	void setRank(int rank);
-	bool hasRevealed();
 };
 
 #endif /* PILE_H_ */

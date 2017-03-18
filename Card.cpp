@@ -19,6 +19,7 @@ int Card::findSuit(string x) {
 			return i;
 		}
 	}
+    return -1;
 }
 
 int Card::findRank(string r) {
@@ -94,7 +95,13 @@ ostream& operator<<(ostream& out, Card& c) {
     return out;
 }
 
+Card::Card(Card& other) {
+	suit=other.suit;
+	rank=other.rank;
+}
+
 Card::~Card() {
 	// TODO Auto-generated destructor stub
+//	cout << "Card destruct" << endl;
 }
 

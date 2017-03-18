@@ -34,8 +34,7 @@ Card* Deck::deal() {
 	if (idxTopCard>=52) {
 		throw domain_error("no cards to deal");
 	}
-	Card* topCard= &cards[idxTopCard++];
-	return topCard;
+	return &cards[idxTopCard++];
 }
 
 Deck* Deck::createShuffledDeck() {
@@ -57,6 +56,10 @@ Card* Deck::getCards() {
 
 Deck::~Deck() {
 	// TODO Auto-generated destructor stub
+//	for (int i=0;i<52;i++) {
+//		delete &cards[i];
+//	}
+	cout << "Deck destruct" << endl;
 	delete[] cards;
 }
 

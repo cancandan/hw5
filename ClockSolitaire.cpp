@@ -17,7 +17,7 @@ using namespace std;
 
 bool checkPiles(Pile* piles, bool log) {
     bool allOk=true;
-    if (log) {cout << "Unrevelead piles: ";}
+    if (log) {cout << "Unrevealed piles: ";}
     for (int i=0;i<13;i++) {
         if (!piles[i].hasRevealed()) {
             if (log) {cout << i << " ";}
@@ -44,6 +44,7 @@ Pile* createPiles(bool log) {
         if (log) {piles[j].Print();}
 
 	}
+	delete deck;
 	return piles;
 }
 
@@ -63,7 +64,7 @@ bool play(bool log) {
 		currentPileRank=currentCard->getRank();
 		if (currentPileRank==12) {
 			revealedKings++;
-            if (log) {cout << "King revealed: " << revealedKings << endl;}
+            if (log) {cout << "King revealed: " << revealedKings << endl << endl;}
 		}
 		if (revealedKings==4) {
 			if (checkPiles(piles,log)) {
@@ -92,7 +93,7 @@ void multiplePlays(int numplays) {
 
 int main() {
     srand (time(NULL));
-    //	play(true);
-    multiplePlays(10000);
+    	play(true);
+//    multiplePlays(1000);
     return 0;
 }

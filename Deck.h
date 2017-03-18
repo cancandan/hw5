@@ -14,7 +14,7 @@ class Deck {
 
 private:
 	Card* cards;
-	int idxTopCard=0;
+	int idxTopCard;
 
 public:
 	Deck();

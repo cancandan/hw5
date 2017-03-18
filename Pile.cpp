@@ -15,6 +15,7 @@ Pile::Pile() {
 	cards = new Card*[MAX_SIZE];
 	front=-1;
 	rear=-1;
+	rank=-1;
 	firstUp=4;
 }
 
@@ -75,7 +76,6 @@ void Pile::Print() {
 
 Pile::~Pile() {
 	// TODO Auto-generated destructor stub
-	//	delete[] cards;
 	cout << "Pile destruct" << endl;
 
 }

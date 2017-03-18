@@ -13,6 +13,7 @@ using namespace std;
 
 Deck::Deck() {
 	// TODO Auto-generated constructor stub
+	idxTopCard=0;
 	cards= new Card[52];
 	for (int i=0;i<52;i++) {
 		cards[i].setSuit(i/13);
@@ -59,7 +60,7 @@ Deck::~Deck() {
 //	for (int i=0;i<52;i++) {
 //		delete &cards[i];
 //	}
-	cout << "Deck destruct" << endl;
+//	cout << "Deck destruct" << endl;
 	delete[] cards;
 }
 

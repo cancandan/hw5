@@ -4,32 +4,32 @@
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Using the deck and card objects,
-//				 implement the clock solitaire game https://en.wikipedia.org/wiki/Clock_Patience
+// implement the clock solitaire game https://en.wikipedia.org/wiki/Clock_Patience
 //============================================================================
 
+#include <ctime>
 #include <iostream>
 
 #include "Card.h"
 #include "Deck.h"
 #include "Pile.h"
-
 using namespace std;
 
 bool checkPiles(Pile* piles, bool log) {
-	bool allOk=true;
-	if (log) {cout << "Unrevelead piles: ";}
-	for (int i=0;i<13;i++) {
-		if (!piles[i].hasRevealed()) {
-			if (log) {cout << i << ", ";}
-			allOk=false;
-		}
-	}
-	if (allOk && log) {cout << "None" << endl;}
-	if (log) {cout << endl;}
-	return allOk;
+    bool allOk=true;
+    if (log) {cout << "Unrevelead piles: ";}
+    for (int i=0;i<13;i++) {
+        if (!piles[i].hasRevealed()) {
+            if (log) {cout << i << " ";}
+            allOk=false;
+        }
+    }
+    if (allOk && log) {cout << "None" << endl;}
+    if (log) {cout << endl;}
+    return allOk;
 }
 
-Pile* createPiles() {
+Pile* createPiles(bool log) {
 	Deck* deck= new Deck();
 	deck->shuffle();
 	Pile* piles= new Pile[13];
@@ -37,31 +37,33 @@ Pile* createPiles() {
 	for (int j=0;j<13;j++) {
 		piles[j].setRank(j);
 		for (int i=0;i<4;i++) {
-			Card* c= deck->deal();
-			piles[j].addCard(c);
+			Card* c=deck->deal();
+			piles[j].putUnder(c);
 		}
+
+        if (log) {piles[j].Print();}
+
 	}
 	return piles;
 }
 
 bool play(bool log) {
-	Pile* piles= createPiles();
+    if (log) {cout << "Create piles by dealing cards:" <<endl << endl;}
+	Pile* piles= createPiles(log);
 
-	// start from the central pile
-	int rank=12;
-	Pile currentPile=piles[rank];
-	Card* cptr;
-
+	int currentPileRank=12;
+	Pile* currentPile=&piles[currentPileRank];
+	Card* currentCard;
 	int revealedKings=0;
-	while (true) {
-		if (log) {currentPile.print();cout << endl;}
-		cptr=currentPile.getTop();
-		piles[rank]=currentPile;
 
-		rank=(*cptr).getRank();
-		if (rank==12) {
+    if (log) {cout << endl << "Game begins:" <<endl << endl;}
+	while (true) {
+		if (log) currentPile->Print();
+		currentCard=currentPile->getTop();
+		currentPileRank=currentCard->getRank();
+		if (currentPileRank==12) {
 			revealedKings++;
-			if (log) {cout << "king revealed: " << revealedKings << endl;}
+            if (log) {cout << "King revealed: " << revealedKings << endl;}
 		}
 		if (revealedKings==4) {
 			if (checkPiles(piles,log)) {
@@ -72,30 +74,25 @@ bool play(bool log) {
 				return false;
 			}
 		}
-		currentPile= piles[rank];
-		currentPile.addUnder(cptr);
-		piles[rank]=currentPile;
+		currentPile= &piles[currentPileRank];
+		currentPile->putUnder(currentCard);
 	}
 }
 
 void multiplePlays(int numplays) {
-	int wins=0;
-	for (int i=0;i<numplays;i++) {
-		if (play(false)) {
-			wins++;
-		}
-	}
-	cout << "Wins: " << wins << " Losses: " << numplays-wins << endl;
-	cout << "Ratio wins: " << (double)wins/numplays << ", Theoretical win probability: " << 1.0/13.0 << endl;
+    int wins=0;
+    for (int i=0;i<numplays;i++) {
+        if (play(false)) {
+            wins++;
+        }
+    }
+    cout << "Wins: " << wins << " Losses: " << numplays-wins << endl;
+    cout << "Ratio wins: " << (double)wins/numplays << ", Theoretical win probability: " << 1.0/13.0 << endl;
 }
 
 int main() {
-	srand (time(NULL));
-//	play(true);
-	multiplePlays(10000);
-	return 0;
+    srand (time(NULL));
+    //	play(true);
+    multiplePlays(10000);
+    return 0;
 }
-
-
-
-

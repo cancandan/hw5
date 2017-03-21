@@ -8,26 +8,25 @@
 #ifndef PILE_H_
 #define PILE_H_
 #include "Card.h"
+#include <queue>
 
 #define MAX_SIZE 5
 
 class Pile {
-	Card** cards;
-	int front;
-	int rear;
+	vector<Card*> cards;
 	int firstUp;
 	int rank;
 public:
 	Pile();
-	bool IsEmpty();
-	bool IsFull();
 	void putUnder(Card* c);
-	bool hasRevealed();
 	Card* getTop();
-	void Print();
-	virtual ~Pile();
+	bool hasRevealed();
 	int getRank() const;
 	void setRank(int rank);
+	void Print();
+	virtual ~Pile();
+	Pile& operator=(Pile& p);
+
 };
 
 #endif /* PILE_H_ */

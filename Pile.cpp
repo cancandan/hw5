@@ -8,74 +8,42 @@
 #include "Pile.h"
 
 #include <iostream>
+#include <queue>
 using namespace std;
 
 Pile::Pile() {
 	// TODO Auto-generated constructor stub
-	cards = new Card*[MAX_SIZE];
-	front=-1;
-	rear=-1;
-	rank=-1;
+	vector<Card*> cards(5);
 	firstUp=4;
+	rank=-1;
 }
 
-bool Pile::IsEmpty() {
-	return (front==-1 && rear==-1);
-}
 
-bool Pile::IsFull() {
-	return (rear+1)%MAX_SIZE == front ? true : false;
+void Pile::Print() {
+	cout << "Pile " << rank<<": ";
+	for (vector<Card*>::iterator it= cards.begin(); it != cards.end(); ++it) {
+		Card* p= *it;
+		if (p) {
+			cout << *p << " ";
+		}
+	}
+	cout << "--firstUp: " << firstUp << endl;
 }
 
 void Pile::putUnder(Card* c) {
-	if(IsFull()) {
-		throw domain_error("Pile is full");
-	}
-	if (IsEmpty()) {
-		front = rear = 0;
-	} else {
-		rear = (rear+1)%MAX_SIZE;
-	}
-	cards[rear] = c;
+	cards.push_back(c);
 }
 
 Card* Pile::getTop() {
-	Card* ret;
-	if(IsEmpty()) {
-		throw domain_error("Pile is empty");
-	} else if(front == rear) {
-		ret = cards[front];
-		rear = front = -1;
-	} else {
-		ret = cards[front];
-		front = (front+1)%MAX_SIZE;
-	}
+	Card* p=cards.front();
+	cards.erase(cards.begin());
 	firstUp--;
-	return ret;
-}
-
-void Pile::Print() {
-	if (IsEmpty()) {
-		cout << "Pile Empty" << endl;
-		return;
-	}
-	cout << "Pile " << rank<<": ";
-    int count = (rear+MAX_SIZE-front)%MAX_SIZE + 1;
-    for(int i = 0; i <count; i++) {
-        int idx= (front+i) % MAX_SIZE;
-		if (cards[idx]) {
-			cout<< *(cards[idx]) << " ";
-		}
-		cout << " ";
-	}
-
-    cout << "--firstUp: " << firstUp;
-	cout << endl;
+	return p;
 }
 
 Pile::~Pile() {
 	// TODO Auto-generated destructor stub
-	cout << "Pile destruct" << endl;
+	//cout << "Pile destruct" << endl;
 
 }
 
@@ -89,4 +57,10 @@ void Pile::setRank(int rank) {
 
 bool Pile::hasRevealed() {
 	return firstUp<=0?true:false;
+}
+
+Pile& Pile::operator =(Pile& other) {
+	rank=other.rank;
+	firstUp=other.firstUp;
+	return *this;
 }
